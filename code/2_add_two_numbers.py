@@ -30,6 +30,7 @@ class ListNode:
         self.next = None
 
 
+'''
 class Solution:
     def addTwoNumbers(self, l1, l2):
         num1, num2 = '', ''
@@ -51,3 +52,29 @@ class Solution:
             node_list[i].next = node_list[i+1]
 
         return node_list[0]
+'''
+
+
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+        HeadNode = ListNode(0)
+        cur = HeadNode
+        carry = 0
+        # 技巧: 迭代2个链表的同时进行计算,存入result链表,使算法复杂度降低.
+        while l1 or l2:
+            x = l1.val if l1 else 0
+            y = l2.val if l2 else 0
+            sum_cur = x + y + carry
+            carry = 0
+            if sum_cur >= 10:
+                carry = 1
+                sum_cur %= 10
+            cur.next = ListNode(sum_cur)
+            l1 = l1.next if l1 and l1.next else None
+            l2 = l2.next if l2 and l2.next else None
+            cur = cur.next
+        # l1,l2都迭代完, 但是最后有进位时
+        if carry:
+            cur.next = ListNode(carry)
+
+        return HeadNode.next
