@@ -19,7 +19,8 @@ nums2 = [3, 4]
 
 The median is (2 + 3)/2 = 2.5
 '''
-import math
+
+# O(m+n)
 
 
 class Solution:
@@ -27,13 +28,27 @@ class Solution:
         nums = []
         length = len(nums1) + len(nums2)
         p1, p2 = 0, 0
-        for _ in range(int(length/2)+1):
-            if nums1[p1] < nums2[p2]:
+
+        if length == 1:
+            return (nums1+nums2)[0]
+
+        m_idx = int(length/2)+1
+        for _ in range(m_idx):
+            if p2 > len(nums2)-1:
                 nums.append(nums1[p1])
                 p1 += 1
-            else:
+                continue
+            if p1 > len(nums1)-1:
                 nums.append(nums2[p2])
                 p2 += 1
+                continue
+            if nums1[p1] < nums2[p2]:
+                nums.append(nums1[p1])
+                p1 = p1 + 1
+            else:
+                nums.append(nums2[p2])
+                p2 = p2 + 1
+
         if length % 2 == 0:
             median = (nums[-1] + nums[-2])/2
         else:
@@ -43,7 +58,7 @@ class Solution:
 
 
 if __name__ == "__main__":
-    nums1 = [1, 3, 5]
-    nums2 = [2, 3, 6]
+    nums1 = []
+    nums2 = [1]
     s = Solution()
     print(s.findMedianSortedArrays(nums1, nums2))
