@@ -17,7 +17,6 @@ class Solution:
         self.res = []
 
     def inorderTraversal(self, root):
-        print(root)
         if not root:
             return 
         self.inorderTraversal(root.left)
